@@ -1,0 +1,327 @@
+---
+// src/layouts/Layout.astro
+import "../styles/global.css";
+import '@fontsource-variable/montserrat';
+
+export interface Props {
+  title: string;
+  description?: string;
+  keywords?: string;
+  ogImage?: string;
+  canonicalURL?: string;
+  noIndex?: boolean;
+}
+
+const { 
+  title, 
+  description = "Masterclass gratuita del Dr. Rawdy Reales: Descubre las 5 razones para crear marca personal y aumentar tus ingresos en un 300%. Inscríbete gratis ahora.",
+  keywords = "Dr. Rawdy, masterclass, marca personal, redes sociales, consultas médicas online, consultorio virtual, ingresos médicos, medicina digital, branding médico",
+  ogImage = "/og-masterclass.jpg",
+  canonicalURL,
+  noIndex = false
+} = Astro.props;
+
+const currentURL = canonicalURL || Astro.url.pathname;
+const siteURL = "https://aprendeconrawdy.com";
+const fullURL = `${siteURL}${currentURL}`;
+const fullOgImage = `${siteURL}${ogImage}`;
+
+// Structured data for the masterclass
+const masterclassStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "Masterclass: 5 Razones para Crear Marca Personal",
+  "description": description,
+  "image": fullOgImage,
+  "url": fullURL,
+  "startDate": new Date().toISOString(),
+  "eventStatus": "https://schema.org/EventScheduled",
+  "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
+  "location": {
+    "@type": "VirtualLocation",
+    "url": fullURL
+  },
+  "organizer": {
+    "@type": "Person",
+    "name": "Dr. Rawdy Reales",
+    "url": "https://aprendeconrawdy.com"
+  },
+  "offers": {
+    "@type": "Offer",
+    "url": fullURL,
+    "price": "0",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock"
+  }
+};
+
+const personStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Dr. Rawdy Reales",
+  "jobTitle": "Médico Especialista",
+  "url": "https://aprendeconrawdy.com",
+  "image": "https://aprendeconrawdy.com/dr-rawdy-profile.jpg",
+  "sameAs": [
+    "https://www.facebook.com/RawdyrealesSM",
+    "https://www.instagram.com/dr.rawdy/",
+    "https://www.youtube.com/@DrRawdy",
+    "https://www.tiktok.com/@dr.rawdy"
+  ],
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Bucaramanga",
+    "addressRegion": "Santander",
+    "addressCountry": "CO"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+57-315-429-0215",
+    "email": "cursosrawdyreales@gmail.com",
+    "contactType": "customer service"
+  },
+  "knowsAbout": ["Medicina", "Marca Personal", "Marketing Digital", "Consultas Online", "Educación Médica"]
+};
+---
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title}>
+    <meta name="description" content={description}>
+    <meta name="keywords" content={keywords}>
+    <meta name="author" content="Dr. Rawdy Reales">
+    <meta name="robots" content={noIndex ? "noindex, nofollow" : "index, follow"}>
+    <meta name="language" content="Spanish">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href={fullURL}>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="./iconorawdy.png">
+    <link rel="apple-touch-icon" href="./iconorawdy.png">
+    <link rel="shortcut icon" href="./iconorawdy.png">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content={fullURL}>
+    <meta property="og:title" content={title}>
+    <meta property="og:description" content={description}>
+    <meta property="og:image" content={fullOgImage}>
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Dr. Rawdy - Masterclass">
+    <meta property="og:locale" content="es_ES">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content={fullURL}>
+    <meta property="twitter:title" content={title}>
+    <meta property="twitter:description" content={description}>
+    <meta property="twitter:image" content={fullOgImage}>
+    <meta property="twitter:creator" content="@drrawdy">
+    <meta property="twitter:site" content="@drrawdy">
+    
+    <!-- Additional SEO Meta Tags -->
+    <meta name="geo.region" content="CO-SAT">
+    <meta name="geo.placename" content="Bucaramanga">
+    <meta name="geo.position" content="7.119349;-73.122742">
+    <meta name="ICBM" content="7.119349, -73.122742">
+    
+    <!-- Mobile Specific -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Masterclass Dr. Rawdy">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#0891b2">
+    <meta name="msapplication-navbutton-color" content="#0891b2">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#0891b2">
+    
+    <!-- Preconnect for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://app.convertkit.com">
+    <link rel="dns-prefetch" href="https://convertkit.com">
+    <link rel="dns-prefetch" href="https://www.facebook.com">
+    <link rel="dns-prefetch" href="https://www.instagram.com">
+    
+    <!-- Preload critical assets -->
+    <link rel="preload" href="/dr-rawdy-profile.jpg" as="image">
+    
+    <!-- JSON-LD Structured Data for Person -->
+    <script type="application/ld+json" set:html={JSON.stringify(personStructuredData)}></script>
+    
+    <!-- JSON-LD Structured Data for Event -->
+    <script type="application/ld+json" set:html={JSON.stringify(masterclassStructuredData)}></script>
+    
+    <!-- Google Analytics / Tag Manager (replace with your IDs) -->
+    <!-- 
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'GA_MEASUREMENT_ID');
+    </script>
+    -->
+    
+    <!-- Facebook Pixel (replace with your pixel ID) -->
+    <!--
+    <script>
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', 'YOUR_PIXEL_ID');
+      fbq('track', 'PageView');
+    </script>
+    -->
+    
+    <!-- Performance optimizations -->
+    <link rel="prefetch" href="/thank-you">
+    
+    <!-- Landing page specific styles -->
+    <style>
+      /* Critical CSS for above-the-fold content */
+      body {
+        font-family: 'Montserrat Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+      
+      /* Smooth scrolling */
+      html {
+        scroll-behavior: smooth;
+      }
+      
+      /* Ensure proper scrolling on mobile */
+      html, body {
+        height: 100%;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+      }
+      
+      /* Fix for iOS scroll issues */
+      * {
+        -webkit-overflow-scrolling: touch;
+      }
+      
+      /* Custom animations */
+      @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+      }
+      
+      @keyframes pulse-glow {
+        0%, 100% { opacity: 0.3; }
+        50% { opacity: 0.8; }
+      }
+      
+      .animate-float {
+        animation: float 6s ease-in-out infinite;
+      }
+      
+      .animate-pulse-glow {
+        animation: pulse-glow 4s ease-in-out infinite;
+      }
+      
+      /* Gradient text animation */
+      @keyframes gradient-shift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      
+      .animate-gradient {
+        background-size: 200% 200%;
+        animation: gradient-shift 3s ease infinite;
+      }
+    </style>
+</head>
+<body>
+    <!-- Loading overlay -->
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
+    
+    <!-- Main content -->
+    <div class="content-wrapper" id="content-wrapper">
+        <slot />
+    </div>
+    
+    <!-- Scripts -->
+    <script is:inline>
+        // Page loading handler
+        document.addEventListener('DOMContentLoaded', function() {
+            const loadingOverlay = document.getElementById('loading-overlay');
+            const contentWrapper = document.getElementById('content-wrapper');
+            
+            // Hide loading overlay and show content
+            setTimeout(() => {
+                loadingOverlay.classList.add('hidden');
+                contentWrapper.classList.add('loaded');
+            }, 800);
+        });
+        
+        // Track form interactions
+        document.addEventListener('submit', function(e) {
+            if (e.target.dataset.svForm) {
+                // Track form submission
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'form_submit', {
+                        'event_category': 'engagement',
+                        'event_label': 'masterclass_signup'
+                    });
+                }
+                
+                // Track Facebook pixel event
+                if (typeof fbq !== 'undefined') {
+                    fbq('track', 'Lead');
+                }
+            }
+        });
+        
+        // Track scroll depth
+        let maxScroll = 0;
+        window.addEventListener('scroll', function() {
+            const scrollPercent = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+            if (scrollPercent > maxScroll) {
+                maxScroll = scrollPercent;
+                if (maxScroll === 25 || maxScroll === 50 || maxScroll === 75 || maxScroll === 100) {
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'scroll_depth', {
+                            'event_category': 'engagement',
+                            'event_label': maxScroll + '%'
+                        });
+                    }
+                }
+            }
+        });
+        
+        // Exit intent detection
+        let exitIntentTriggered = false;
+        document.addEventListener('mouseout', function(e) {
+            if (e.clientY < 0 && !exitIntentTriggered) {
+                exitIntentTriggered = true;
+                // You can trigger an exit intent popup here
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'exit_intent', {
+                        'event_category': 'engagement'
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html>

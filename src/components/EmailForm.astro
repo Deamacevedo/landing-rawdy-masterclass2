@@ -1,0 +1,355 @@
+---
+// src/components/EmailForm.astro
+// Componente para el formulario de captación de email con ConvertKit
+---
+
+<div id="email-form" class="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-4 py-10e:\Descargas\Fotodocc.png border border-white/20 relative overflow-hidden">
+  <!-- Decorative gradient -->
+  <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600"></div>
+  
+  <!-- Form header -->
+  <div class="text-center mb-2">
+    <h2 class="text-2xl font-bold text-gray-800 mb-2">¡Inscríbete Gratis!</h2>
+    <p class="text-gray-600 text-sm mb-3">Miércoles 23 de Julio 7:00PM</p>
+    <p class="text-gray-500 text-xs">Accede al evento en vivo sin costo</p>
+  </div>
+
+  <!-- ConvertKit Form -->
+  <form 
+    id="convertkit-form"
+    action="https://app.kit.com/forms/8315721/subscriptions" 
+    method="post" 
+    class="space-y-4"
+    data-sv-form="8315721"
+    data-uid="69204bdc52"
+    data-format="inline"
+    data-version="5"
+    data-options='{"settings":{"after_subscribe":{"action":"message","success_message":"Success! Now check your email to confirm your subscription.","redirect_url":""},"analytics":{"google":null,"fathom":null,"facebook":null,"segment":null,"pinterest":null,"sparkloop":null,"googletagmanager":null},"modal":{"trigger":"timer","scroll_percentage":null,"timer":5,"devices":"all","show_once_every":15},"powered_by":{"show":false,"url":"https://kit.com/features/forms?utm_campaign=poweredby&utm_content=form&utm_medium=referral&utm_source=dynamic"},"recaptcha":{"enabled":false},"return_visitor":{"action":"show","custom_content":""},"slide_in":{"display_in":"bottom_right","trigger":"timer","scroll_percentage":null,"timer":5,"devices":"all","show_once_every":15},"sticky_bar":{"display_in":"top","trigger":"timer","scroll_percentage":null,"timer":5,"devices":"all","show_once_every":15}},"version":"5"}'
+  >
+    <!-- Email input -->
+    <div class="formkit-field relative mb-4">
+      <input
+        type="email"
+        name="email_address"
+        id="ck-email"
+        class="formkit-input w-full px-4 py-4 bg-gray-50 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:bg-white focus:outline-none transition-all duration-200 text-gray-800 placeholder-gray-500"
+        placeholder="Tu email"
+        aria-label="Email Address"
+        required
+      />
+      <div class="absolute inset-y-0 right-0 flex items-center pr-4">
+        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"/>
+        </svg>
+      </div>
+      <div id="error-message" class="text-red-500 text-xs mt-2 text-center hidden">
+        <!-- Error message will appear here -->
+      </div>
+    </div>
+
+    <!-- Submit button -->
+    <button
+      type="submit"
+      class="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-bold py-4 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105 relative overflow-hidden"
+      id="submit-btn"
+    >
+      <span id="btn-text" class="transition-all duration-300 flex items-center justify-center space-x-2">
+        <span>¡Quiero Acceder Ahora!</span>
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+        </svg>
+      </span>
+      
+      <!-- Loading Animation - Pulso con partículas -->
+      <div id="spinner" class="hidden absolute inset-0 flex items-center justify-center">
+        <div class="relative">
+          <!-- Círculo principal que pulsa -->
+          <div class="w-6 h-6 bg-white/30 rounded-full animate-ping"></div>
+          <!-- Círculo central -->
+          <div class="absolute inset-0 w-6 h-6 bg-white rounded-full animate-pulse"></div>
+          <!-- Partículas flotantes -->
+          <div class="absolute -top-1 -left-1 w-2 h-2 bg-white/70 rounded-full animate-bounce delay-100"></div>
+          <div class="absolute -top-1 -right-1 w-1.5 h-1.5 bg-white/70 rounded-full animate-bounce delay-300"></div>
+          <div class="absolute -bottom-1 -left-1 w-1.5 h-1.5 bg-white/70 rounded-full animate-bounce delay-500"></div>
+          <div class="absolute -bottom-1 -right-1 w-2 h-2 bg-white/70 rounded-full animate-bounce delay-700"></div>
+        </div>
+      </div>
+      
+      <!-- Success Animation - Checkmark con efecto de aparición -->
+      <div id="success-icon" class="hidden absolute inset-0 items-center flex justify-center">
+        <div class="relative">
+          <!-- Círculo de fondo que se expande -->
+          <div class="w-8 h-8 bg-white/20 rounded-full animate-ping"></div>
+          <!-- Checkmark principal -->
+          <svg class="absolute inset-0 h-8 w-8 text-white animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+          </svg>
+        </div>
+      </div>
+    </button>
+  </form>
+
+  <!-- Trust indicators -->
+  <div class="mt-6 space-y-3">
+    <div class="flex items-center justify-center text-sm text-gray-600">
+      <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+      </svg>
+      <span>100% Gratuito</span>
+    </div>
+    
+    <div class="flex items-center justify-center text-sm text-gray-600">
+      <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+      </svg>
+      <span>Sin spam, solo contenido de valor</span>
+    </div>
+    
+    <div class="flex items-center justify-center text-sm text-gray-600">
+      <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+      </svg>
+      <span>Puedes cancelar cuando quieras</span>
+    </div>
+  </div>
+</div>
+
+<!-- ConvertKit Script -->
+<script src="https://f.convertkit.com/ckjs/ck.5.js"></script>
+
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("convertkit-form");
+    const emailInput = document.getElementById("ck-email");
+    const submitBtn = document.getElementById("submit-btn");
+    const btnText = document.getElementById("btn-text");
+    const spinner = document.getElementById("spinner");
+    const successIcon = document.getElementById("success-icon");
+    const errorMessage = document.getElementById("error-message");
+
+    if (!form || !emailInput || !submitBtn || !btnText || !spinner || !successIcon || !errorMessage) {
+      console.error("Error: No se encontraron todos los elementos del DOM para el formulario.");
+      return;
+    }
+
+    function isValidEmail(email) {
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return re.test(String(email).toLowerCase());
+    }
+
+    function handleFormError(message) {
+      if (errorMessage) {
+        errorMessage.textContent = message;
+        errorMessage.classList.remove("hidden");
+      }
+
+      const inputElement = document.getElementById("ck-email");
+      if (inputElement) {
+        inputElement.classList.add("border-red-500", "shake");
+        inputElement.classList.remove("border-green-200", "border-gray-200", "border-blue-500");
+        setTimeout(() => inputElement.classList.remove("shake"), 500);
+      }
+
+      // Reset button state completely
+      resetButtonState();
+    }
+
+    function resetButtonState() {
+      submitBtn.disabled = false;
+      btnText.classList.remove("opacity-0", "scale-90");
+      btnText.innerHTML = `
+        <span>¡Quiero Acceder Ahora!</span>
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+        </svg>
+      `;
+      spinner.classList.add("hidden");
+      successIcon.classList.add("hidden");
+    }
+
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const email = emailInput.value.trim();
+      const parent = emailInput.parentElement;
+
+      if (!isValidEmail(email)) {
+        handleFormError("Por favor ingresa un correo válido.");
+        return;
+      }
+
+      errorMessage.classList.add("hidden");
+      const inputElement = document.getElementById("ck-email");
+      if (inputElement) {
+        inputElement.classList.remove("border-red-500", "border-yellow-400");
+        inputElement.classList.add("border-green-200");
+      }
+
+      // Set loading state with animation
+      submitBtn.disabled = true;
+      btnText.classList.add("opacity-0", "scale-90");
+      
+      // Small delay for smoother transition
+      setTimeout(() => {
+        spinner.classList.remove("hidden");
+      }, 150);
+
+      const formData = new FormData(form);
+
+      try {
+        const response = await fetch(form.action, {
+          method: "POST",
+          body: formData,
+          headers: {
+            Accept: "application/json",
+          },
+        });
+
+        if (response.ok) {
+          // --- Éxito - Animación mejorada ---
+          spinner.classList.add("hidden");
+          successIcon.classList.remove("hidden");
+
+          setTimeout(() => {
+            btnText.textContent = "¡Registro exitoso!";
+            btnText.classList.remove("opacity-0", "scale-90");
+            btnText.classList.add("scale-105");
+            successIcon.classList.add("hidden");
+          }, 1200);
+
+          setTimeout(() => {
+            // Reset completo del formulario
+            form.reset();
+            resetButtonState();
+            
+            const inputElement = document.getElementById("ck-email");
+            if (inputElement) {
+              inputElement.classList.remove("border-green-200", "border-red-500", "border-yellow-400");
+              inputElement.classList.add("border-gray-200");
+            }
+            errorMessage.classList.add("hidden");
+          }, 3000);
+
+          // Track conversion
+          if (typeof gtag !== 'undefined') {
+            gtag('event', 'conversion', {
+              'send_to': 'AW-CONVERSION_ID/CONVERSION_LABEL',
+              'value': 1.0,
+              'currency': 'USD'
+            });
+          }
+
+          if (typeof fbq !== 'undefined') {
+            fbq('track', 'Lead');
+          }
+        } else {
+          // --- Error del servidor ---
+          handleFormError("Hubo un error. Inténtalo de nuevo.");
+        }
+      } catch (error) {
+        // --- Error de red ---
+        console.error("Error al enviar el formulario:", error);
+        handleFormError("Error de conexión. Revisa tu internet.");
+      }
+    });
+
+    emailInput.addEventListener("input", function () {
+      const email = emailInput.value.trim();
+      const inputElement = document.getElementById("ck-email");
+      if (!inputElement) return;
+
+      if (isValidEmail(email)) {
+        inputElement.classList.add("border-green-200");
+        inputElement.classList.remove("border-yellow-400", "border-red-500", "border-gray-200");
+        errorMessage.classList.add("hidden");
+      } else if (email === "") {
+        inputElement.classList.remove("border-green-200", "border-yellow-400", "border-red-500");
+        inputElement.classList.add("border-gray-200");
+        errorMessage.classList.add("hidden");
+      } else {
+        inputElement.classList.add("border-yellow-400");
+        inputElement.classList.remove("border-green-200", "border-red-500", "border-gray-200");
+      }
+    });
+
+    // Track form submission attempt
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'form_submit', {
+        'event_category': 'engagement',
+        'event_label': 'masterclass_signup'
+      });
+    }
+  });
+</script>
+
+<style>
+  /* Shake animation for errors */
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+
+  .shake {
+    animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  }
+
+  /* Enhanced animations for button states */
+  @keyframes pulse-scale {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+
+  @keyframes float-particles {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    33% { transform: translateY(-3px) rotate(120deg); }
+    66% { transform: translateY(3px) rotate(240deg); }
+  }
+
+  /* Apply floating animation to particles */
+  #spinner .animate-bounce {
+    animation: float-particles 1.5s ease-in-out infinite;
+  }
+
+  /* Success icon enhanced animation */
+  #success-icon svg {
+    animation: pulse-scale 0.6s ease-in-out;
+  }
+
+  /* Button text transitions */
+  #btn-text {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Border color transitions */
+  .border-green-200 {
+    border-color: #bbf7d0 !important;
+  }
+  
+  .border-yellow-400 {
+    border-color: #f59e0b !important;
+  }
+  
+  .border-red-500 {
+    border-color: #ef4444 !important;
+  }
+  
+  .border-gray-200 {
+    border-color: #e5e7eb !important;
+  }
+
+  .border-blue-500 {
+    border-color: #3b82f6 !important;
+  }
+
+  /* Enhanced input focus styles */
+  .formkit-input:focus {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    transform: translateY(-1px);
+  }
+
+  /* Hide powered by ConvertKit */
+  .formkit-powered-by {
+    display: none !important;
+  }
+</style>
